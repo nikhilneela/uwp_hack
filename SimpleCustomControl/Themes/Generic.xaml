@@ -1,0 +1,41 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleCustomControl">
+
+    <Style TargetType="local:SimpleControl" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:SimpleControl">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    
+                    <Viewbox>
+                        <Grid x:Name="EyeDropper"
+                              Height="200"
+                              Width="200"
+                              Background="Transparent">
+                            <Path x:Name="Ring"/>
+                                <Ellipse Width="200" Height="200">
+                                    <Ellipse.Fill>
+                                        <ImageBrush>
+                                            <ImageBrush.Transform>
+                                                <!--<TranslateTransform X="" Y="10"/>-->
+                                                <ScaleTransform ScaleX="2" ScaleY="2" CenterX="100" CenterY="100"/>
+                                            </ImageBrush.Transform>
+                                            <ImageBrush.ImageSource>
+                                                <BitmapImage UriSource="ms-appx:///flip-flop.png"/>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </Grid>
+                    </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
