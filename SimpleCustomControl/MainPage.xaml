@@ -18,7 +18,7 @@
 
     <Grid x:Name="ParentView">
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/SPACE.jpg" />
+            <ImageBrush ImageSource="/Assets/aa.png" />
         </Grid.Background>
     </Grid>
     

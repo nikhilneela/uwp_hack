@@ -11,6 +11,5 @@
 
     <Canvas Name="MainCanvas" Background="Transparent" >
         <Button x:Name="SControl" Content="GGGGGGGGGGG" Height="50" Width="50" MaxHeight="50" MaxWidth="50"/>
-        <Image x:Name="dd" />
     </Canvas>
 </UserControl>
