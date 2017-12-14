@@ -96,14 +96,14 @@ namespace SimpleCustomControl
             _upperArcPath.StrokeThickness = 4;
             _upperArcPath.Data = ua;
 
-            ImageBrush br = new ImageBrush();
-            BitmapImage bi = new BitmapImage();
-            var randomAccessStream = new InMemoryRandomAccessStream();
-            var outputStream = randomAccessStream.GetOutputStreamAt(0);
-            await RandomAccessStream.CopyAsync(await toStream(await _bitmap.GetPixelsAsync()), outputStream);
-            await bi.SetSourceAsync(randomAccessStream);
-            br.ImageSource = bi;
-            _bitmapImageCircle.Fill = br;
+            //ImageBrush br = new ImageBrush();
+            //BitmapImage bi = new BitmapImage();
+            //var randomAccessStream = new InMemoryRandomAccessStream();
+            //var outputStream = randomAccessStream.GetOutputStreamAt(0);
+            //await RandomAccessStream.CopyAsync(await toStream(await _bitmap.GetPixelsAsync()), outputStream);
+            //await bi.SetSourceAsync(randomAccessStream);
+            //br.ImageSource = bi;
+            //_bitmapImageCircle.Fill = br;
         }
 
 
