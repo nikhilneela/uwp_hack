@@ -7,8 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Hello World!!"/>
-        <local:SimpleControl />
+    <Page.TopAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Content="Show Picker" x:Name="ShowColorPickerButton" Click="ShowColorPickerClicked"   />
+                <AppBarButton Content="Hide Picker" x:Name="HideColorPickerButton" Click="HideColorPickerClicked" Visibility="Collapsed"   />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid x:Name="ParentView">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/SPACE.jpg" />
+        </Grid.Background>
     </Grid>
+    
+    
 </Page>
