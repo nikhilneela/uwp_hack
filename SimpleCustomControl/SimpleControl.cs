@@ -26,11 +26,13 @@ namespace SimpleCustomControl
         Path _upperArcPath;
         Path _lowerArcPath;
         Ellipse _bitmapImageCircle;
+        Ellipse _pinCircle;
         Grid _container;
         double _margin = 2;
         double _thickness = 8;
         Point _center;
         RenderTargetBitmap _bitmap;
+        Color _currentColor;
 
         private const double RADIANS = Math.PI / 180;
 
@@ -54,6 +56,8 @@ namespace SimpleCustomControl
             _lowerArcPath = GetTemplateChild("LowerArc") as Path;
             _container = GetTemplateChild("EyeDropperContainer") as Grid;
             _bitmapImageCircle = GetTemplateChild("ImageCircle") as Ellipse;
+            _pinCircle = GetTemplateChild("PinCircle") as Ellipse;
+
             drawRing();
         }
 
@@ -92,9 +96,13 @@ namespace SimpleCustomControl
 
 
             var ua = GetCircleSegment(_center, innerCircleRadius, 90, SweepDirection.Clockwise);
-            _upperArcPath.Stroke = new SolidColorBrush(Colors.Green);
+            _upperArcPath.Stroke = new SolidColorBrush(_currentColor);
             _upperArcPath.StrokeThickness = 4;
             _upperArcPath.Data = ua;
+
+            _pinCircle.Stroke = new SolidColorBrush(Colors.Black);
+            
+
 
             //ImageBrush br = new ImageBrush();
             //BitmapImage bi = new BitmapImage();
@@ -106,6 +114,11 @@ namespace SimpleCustomControl
             //_bitmapImageCircle.Fill = br;
         }
 
+        public void setCurrentColor(Color color)
+        {
+            _currentColor = color;
+            drawRing();
+        }
 
         private async Task<Windows.Storage.Streams.IRandomAccessStream> toStream(Windows.Storage.Streams.IBuffer ibuffer)
         {
@@ -124,13 +137,13 @@ namespace SimpleCustomControl
             var path = new Path();
             var pathGeometry = new PathGeometry();
 
-            var circleStart = new Point(5, 50);
+            var circleStart = new Point(3, 50);
 
             var arcSegment = new ArcSegment
             {
                 IsLargeArc = false,
                 
-                Point = ScaleUnitCirclePoint(centerPoint, angle, radius),
+                Point = ScaleUnitCirclePoint(centerPoint, angle, radius+2),
                 Size = new Size(radius, radius),
                 SweepDirection = direction
             };

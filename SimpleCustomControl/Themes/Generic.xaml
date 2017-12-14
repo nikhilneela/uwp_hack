@@ -16,6 +16,7 @@
                         <Path x:Name="UpperArc"/>
                         <Path x:Name="LowerArc"/>
                         <Ellipse x:Name="ImageCircle" Width="60" Height="60" />
+                        <Ellipse x:Name="PinCircle"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

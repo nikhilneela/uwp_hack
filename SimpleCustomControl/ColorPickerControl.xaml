@@ -12,6 +12,5 @@
 
     <Canvas Name="MainCanvas" Background="Transparent" >
         <local:SimpleControl x:Name="SControl"/>
-
     </Canvas>
 </UserControl>

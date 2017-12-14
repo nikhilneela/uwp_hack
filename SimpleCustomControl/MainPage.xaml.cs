@@ -52,5 +52,7 @@ namespace SimpleCustomControl
             _colorPickerControl.setControlPosition(location);
             ParentView.Children.Add(_colorPickerControl);
         }
+
+        
     }
 }

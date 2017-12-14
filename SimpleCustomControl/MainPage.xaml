@@ -12,13 +12,14 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton Content="Show Picker" x:Name="ShowColorPickerButton" Click="ShowColorPickerClicked"   />
                 <AppBarButton Content="Hide Picker" x:Name="HideColorPickerButton" Click="HideColorPickerClicked" Visibility="Collapsed"   />
+                
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.TopAppBar>
 
     <Grid x:Name="ParentView">
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/SPACE.jpg" />
+            <ImageBrush ImageSource="/Assets/flip-flop.png" />
         </Grid.Background>
     </Grid>
     
