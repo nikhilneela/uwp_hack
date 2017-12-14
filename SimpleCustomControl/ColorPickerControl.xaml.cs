@@ -43,7 +43,7 @@ namespace SimpleCustomControl
 
             image.Source = _bitmap;
 
-            SControl.Content = image;
+            //SControl.Content = image;
 
         }
 

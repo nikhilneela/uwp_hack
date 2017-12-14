@@ -5,12 +5,13 @@
     xmlns:local="using:SimpleCustomControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Canvas Name="MainCanvas" Background="Transparent" >
-        <Button x:Name="SControl" Content="GGGGGGGGGGG" Height="50" Width="50" MaxHeight="50" MaxWidth="50"/>
-        <Image x:Name="dd" />
+        <local:SimpleControl x:Name="SControl"/>
+
     </Canvas>
 </UserControl>
