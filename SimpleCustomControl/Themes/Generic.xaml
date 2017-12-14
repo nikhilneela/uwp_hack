@@ -7,33 +7,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:SimpleControl">
-                    <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                    
-                    <Viewbox>
-                        <Grid x:Name="EyeDropper"
-                              Height="200"
-                              Width="200"
-                              Background="Transparent">
-                            <Path x:Name="Ring"/>
-                                <Ellipse Width="200" Height="200">
-                                    <Ellipse.Fill>
-                                        <ImageBrush>
-                                            <ImageBrush.Transform>
-                                                <!--<TranslateTransform X="" Y="10"/>-->
-                                                <ScaleTransform ScaleX="2" ScaleY="2" CenterX="100" CenterY="100"/>
-                                            </ImageBrush.Transform>
-                                            <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="ms-appx:///flip-flop.png"/>
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Grid>
-                    </Viewbox>
-                    </Border>
+                    <Grid x:Name="EyeDropperContainer"
+                      Height="100"
+                      Width="100"
+                      Background="Transparent">
+                        <Path x:Name="OuterCircle"/>
+                        <Path x:Name="InnerCircle"/>
+                        <Path x:Name="UpperArc"/>
+                        <Path x:Name="LowerArc"/>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

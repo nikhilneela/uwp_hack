@@ -18,73 +18,111 @@ namespace SimpleCustomControl
 {
     public sealed class SimpleControl : Control
     {
-        Path _ring;
+        Path _outerCirclePath;
+        Path _innerCirclePath;
+        Path _upperArcPath;
+        Path _lowerArcPath;
+        Grid _container;
+        double _margin = 2;
+        double _thickness = 8;
+        Point _center;
+
+        private const double RADIANS = Math.PI / 180;
         public SimpleControl()
         {
             this.DefaultStyleKey = typeof(SimpleControl);
+            this.SizeChanged += SimpleControl_SizeChanged;
+        }
+
+        private void SimpleControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            drawRing();
         }
 
         protected override void OnApplyTemplate()
         {
-            _ring = this.GetTemplateChild("Ring") as Path;
-            drawRing();
             base.OnApplyTemplate();
+            _outerCirclePath = GetTemplateChild("OuterCircle") as Path;
+            _innerCirclePath = GetTemplateChild("InnerCircle") as Path;
+            _upperArcPath = GetTemplateChild("UpperArc") as Path;
+            _lowerArcPath = GetTemplateChild("LowerArc") as Path;
+            _container = GetTemplateChild("EyeDropperContainer") as Grid;
+            drawRing();
+            
         }
+
+        
 
         private void drawRing()
         {
+            _center = new Point(_container.Width / 2, _container.Height / 2);
+
+            double outerCircleRadius = (_container.Width - _margin) / 2;
+            double innerCircleRadius = (_container.Width - _margin - _thickness) / 2;
+
+            var oc = new EllipseGeometry();
+            oc.Center = new Point(_center.X, _center.Y);
+            oc.RadiusX = outerCircleRadius;
+            oc.RadiusY = outerCircleRadius;
 
 
-           
-            _ring.Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 204, 255));
-            _ring.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            _ring.StrokeThickness = 1;
+            var ic = new EllipseGeometry();
+            ic.Center = new Point(_center.X, _center.Y);
+            ic.RadiusX = innerCircleRadius;
+            ic.RadiusY = innerCircleRadius;
 
-            var geometryGroup1 = new GeometryGroup();
-            var rectangleGeometry1 = new RectangleGeometry();
-            rectangleGeometry1.Rect = new Rect(50, 5, 100, 10);
-            var rectangleGeometry2 = new RectangleGeometry();
-            rectangleGeometry2.Rect = new Rect(5, 5, 95, 180);
-            geometryGroup1.Children.Add(rectangleGeometry1);
-            geometryGroup1.Children.Add(rectangleGeometry2);
 
-            var ellipseGeometry1 = new EllipseGeometry();
-            ellipseGeometry1.Center = new Point(100, 100);
-            ellipseGeometry1.RadiusX = 20;
-            ellipseGeometry1.RadiusY = 30;
-            geometryGroup1.Children.Add(ellipseGeometry1);
+            _outerCirclePath.Stroke = new SolidColorBrush(Colors.Black);
+            _outerCirclePath.Data = oc;
 
-            var pathGeometry1 = new PathGeometry();
-            var pathFigureCollection1 = new PathFigureCollection();
-            var pathFigure1 = new PathFigure();
-            pathFigure1.IsClosed = true;
-            pathFigure1.StartPoint = new Windows.Foundation.Point(50, 50);
-            pathFigureCollection1.Add(pathFigure1);
-            pathGeometry1.Figures = pathFigureCollection1;
+            _innerCirclePath.Stroke = new SolidColorBrush(Colors.Black);
+            _innerCirclePath.Data = ic;
 
-            var pathSegmentCollection1 = new PathSegmentCollection();
-            var pathSegment1 = new BezierSegment();
-            pathSegment1.Point1 = new Point(75, 300);
-            pathSegment1.Point2 = new Point(125, 100);
-            pathSegment1.Point3 = new Point(150, 50);
-            pathSegmentCollection1.Add(pathSegment1);
 
-            var pathSegment2 = new BezierSegment();
-            pathSegment2.Point1 = new Point(125, 300);
-            pathSegment2.Point2 = new Point(75, 100);
-            pathSegment2.Point3 = new Point(50, 50);
-            pathSegmentCollection1.Add(pathSegment2);
-            pathFigure1.Segments = pathSegmentCollection1;
+            var la = GetCircleSegment(_center, innerCircleRadius, 90, SweepDirection.Counterclockwise);
+            _lowerArcPath.Stroke = new SolidColorBrush(Colors.Blue);
+            _lowerArcPath.StrokeThickness = 4;
+            _lowerArcPath.Data = la;
 
-            geometryGroup1.Children.Add(pathGeometry1);
-            //_ring.Data = geometryGroup1;
 
-            // When you create a XAML element in code, you have to add
-            // it to the XAML visual tree. This example assumes you have
-            // a panel named 'layoutRoot' in your XAML file, like this:
-            // <Grid x:Name="layoutRoot>
-            //layoutRoot.Children.Add(_ring);
+            var ua = GetCircleSegment(_center, innerCircleRadius, 90, SweepDirection.Clockwise);
+            _upperArcPath.Stroke = new SolidColorBrush(Colors.Green);
+            _upperArcPath.StrokeThickness = 4;
+            _upperArcPath.Data = ua;
 
+
+        }
+
+        public PathGeometry GetCircleSegment(Point centerPoint, double radius, double angle, SweepDirection direction)
+        {
+            var path = new Path();
+            var pathGeometry = new PathGeometry();
+
+            var circleStart = new Point(5, 50);
+
+            var arcSegment = new ArcSegment
+            {
+                IsLargeArc = false,
+                
+                Point = ScaleUnitCirclePoint(centerPoint, angle, radius),
+                Size = new Size(radius, radius),
+                SweepDirection = direction
+            };
+
+            var pathFigure = new PathFigure
+            {
+                StartPoint = circleStart,
+                IsClosed = false
+            };
+
+            pathFigure.Segments.Add(arcSegment);
+            pathGeometry.Figures.Add(pathFigure);
+            return pathGeometry;
+        }
+
+        private static Point ScaleUnitCirclePoint(Point origin, double angle, double radius)
+        {
+            return new Point(origin.X + Math.Sin(RADIANS * angle) * radius, origin.Y - Math.Cos(RADIANS * angle) * radius);
         }
     }
 }
